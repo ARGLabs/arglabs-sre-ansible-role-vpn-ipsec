@@ -5,5 +5,5 @@
     state: restarted
 - name: restart_iptables
   service: 
-    name: iptables-save
+    name: iptables-service
     state: restarted
