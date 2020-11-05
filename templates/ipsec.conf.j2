@@ -1,0 +1,29 @@
+# ipsec.conf - strongSwan IPsec configuration file
+
+# basic configuration
+
+config setup
+	strictcrlpolicy=no
+	# uniqueids = no
+
+# Add connections here.
+conn %default
+    left=%defaultroute
+    leftsubnet=10.0.0.0/8
+    right=%any
+
+conn home
+    keyexchange=ikev1
+    aggressive = no
+    ike=aes256-sha1-modp1024
+    rightauth=psk
+    leftauth=psk
+    pfs=no
+    authby=psk
+    auto=add
+    right=%any
+    rightsubnet=192.168.0.0/24
+    type=tunnel
+    ikelifetime=28800
+
+

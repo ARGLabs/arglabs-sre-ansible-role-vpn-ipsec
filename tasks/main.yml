@@ -1,0 +1,51 @@
+- name: Install iptables-services
+  yum:
+    name: iptables-services
+    state: present
+- name: Install strongswan
+  yum:
+    name: strongswan
+    state: present
+- name: Setting sysctl forwarding to 1
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+- name: Copy config files - ipsec.conf
+  template:
+    src: templates/ipsec.conf.j2
+    dest: /etc/strongswan/ipsec.conf
+    owner: root
+    group: root
+    mode: 0644
+- name: Copy config files - ipsec.secrets
+  template:
+    src: templates/ipsec.secrets.j2
+    dest: /etc/strongswan/ipsec.secrets
+    owner: root
+    group: root
+    mode: 0600
+  notify:
+    - restart_strongswan
+- name: Starting strongswan
+  service:
+    name: strongswan
+    state: started
+    enabled: yes
+- name: Copy iptables file
+  template:
+    src: templates/iptables.j2
+    dest: /etc/sysconfig/iptables
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart_iptables
+- name: Starting iptables-service
+  service:
+    name: iptables
+    state: started
+    enabled: yes
+

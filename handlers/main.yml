@@ -1,0 +1,9 @@
+---
+- name: restart_strongswan
+  service: 
+    name: strongswan
+    state: restarted
+- name: restart_iptables
+  service: 
+    name: iptables-save
+    state: restarted
