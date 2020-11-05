@@ -20,6 +20,8 @@
     owner: root
     group: root
     mode: 0644
+  notify:
+    - restart_strongswan
 - name: Copy config files - ipsec.secrets
   template:
     src: templates/ipsec.secrets.j2
@@ -29,7 +31,7 @@
     mode: 0600
   notify:
     - restart_strongswan
-- name: Starting strongswan
+- name: Enable strongswan service
   service:
     name: strongswan
     state: started
@@ -43,7 +45,7 @@
     mode: 0644
   notify:
     - restart_iptables
-- name: Starting iptables-service
+- name: Enable iptables service
   service:
     name: iptables
     state: started
