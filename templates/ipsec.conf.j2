@@ -6,7 +6,7 @@ config setup
 # Add connections here.
 conn %default
     left=%defaultroute
-    leftsubnet=10.0.0.0/8
+    leftsubnet={{ lab_cidr }}
     right=%any
 
 conn home
@@ -19,8 +19,7 @@ conn home
     authby=psk
     auto=add
     right=%any
-    #rightsubnet=192.168.0.0/24
-    rightsubnet=%any
+    rightsubnet={{ my_cidr }}
     type=tunnel
     ikelifetime=28800
 
